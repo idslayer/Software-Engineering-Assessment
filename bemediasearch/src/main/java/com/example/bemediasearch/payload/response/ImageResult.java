@@ -1,8 +1,6 @@
 package com.example.bemediasearch.payload.response;
 
-import com.example.bemediasearch.enums.Tag;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
+import com.example.bemediasearch.dtos.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
