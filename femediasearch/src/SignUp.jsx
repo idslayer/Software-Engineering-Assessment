@@ -1,4 +1,12 @@
-import React, { useState } from 'react'; import './SignUp.css';  const SignUp = () => { const [name, setName] = useState(''); const [email, setEmail] = useState(''); const [description, setDescription] = useState(''); const [message, setMessage] = useState(''); const [error, setError] = useState('');
+import React, {useState} from 'react';
+import './SignUp.css';
+
+const SignUp = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [description, setDescription] = useState('');
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
@@ -15,7 +23,7 @@ import React, { useState } from 'react'; import './SignUp.css';  const SignUp = 
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, description }),
+                body: JSON.stringify({name, email, description}),
             });
 
             if (!response.ok) {
@@ -73,4 +81,5 @@ import React, { useState } from 'react'; import './SignUp.css';  const SignUp = 
             {error && <p className="error-message">{error}</p>}
         </div>
     );
-};  export default SignUp;
+};
+export default SignUp;

@@ -1,11 +1,12 @@
 import React from 'react';
 import './Layout.css';
 import logo from './logo.jpeg';
-const Header = ({ setPage }) => (
+
+const Header = ({setPage}) => (
     <header className="header">
         <div className="header-content">
             <div className="header-logo" onClick={() => setPage('home')}>
-                <img src={logo} alt="Logo" />
+                <img src={logo} alt="Logo"/>
             </div>
             <nav className="header-nav">
                 <button className="header-link" onClick={() => setPage('home')}>Home</button>

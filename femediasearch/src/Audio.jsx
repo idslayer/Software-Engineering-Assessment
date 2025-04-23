@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './Audio.css';
 
 const LOCAL_STORAGE_KEY = 'recent_audio_searches';
@@ -117,7 +117,8 @@ const Audios = () => {
                                             e.stopPropagation();
                                             deleteSearchTerm(term);
                                         }}
-                                    >×</button>
+                                    >×
+                                    </button>
                                 </div>
                             ))}
                             <div className="dropdown-clear" onClick={handleClearSearches}>Clear All</div>
@@ -135,11 +136,11 @@ const Audios = () => {
             <div className="images-grid">
                 {audios.map((audio) => (
                     <div key={audio.id} className="image-card">
-                        <img src={audio.thumbnail} alt={audio.title || 'Audio Thumbnail'} className="audio-thumbnail" />
+                        <img src={audio.thumbnail} alt={audio.title || 'Audio Thumbnail'} className="audio-thumbnail"/>
                         <div className="image-details">
                             <h2 className="image-title">{audio.title || 'Untitled'}</h2>
                             <audio controls>
-                                <source src={audio.url} type="audio/mpeg" />
+                                <source src={audio.url} type="audio/mpeg"/>
                                 Your browser does not support the audio element.
                             </audio>
                         </div>
