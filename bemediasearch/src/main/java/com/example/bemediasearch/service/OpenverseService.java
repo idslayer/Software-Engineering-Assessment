@@ -6,17 +6,12 @@ import com.example.bemediasearch.payload.response.ImageSearchResponse;
 import com.example.bemediasearch.payload.resquest.AudioSearchRequest;
 import com.example.bemediasearch.payload.resquest.ImageSearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,8 +30,6 @@ public class OpenverseService {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
         HttpEntity<Void> entity = new HttpEntity<>(headers);
-        System.out.println(request.getQ());
-        System.out.println(request.getPageSize());
         URI uri = UriComponentsBuilder
             .fromUriString(BASE_URL)
             .queryParam("q", request.getQ())
@@ -87,8 +80,8 @@ public class OpenverseService {
 //            .queryParam("format","json")
             .queryParam("q", request.getQuery())
 
-//            .queryParam("page", request.getPage())
-//            .queryParam("page_size", request.getPageSize())
+            .queryParam("page", request.getPage())
+            .queryParam("page_size", request.getPageSize())
 //            .queryParam("source", request.getSource())
 //            .queryParam("license", request.getLicense())
             .build(true)
@@ -103,30 +96,6 @@ public class OpenverseService {
         return response.getBody();
     }
 
-
-
-//        List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
-////Add the Jackson Message converter
-//        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-//
-//// Note: here we are making this converter to process any kind of response,
-//// not only application/*json, which is the default behaviour
-//        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-//        messageConverters.add(converter);
-//        restTemplate.setMessageConverters(messageConverters);
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setAccept(Collections.singletonList(MediaType.ALL));
-//
-//        HttpEntity<String> entity = new HttpEntity<>(headers);
-//
-//        ResponseEntity<AudioSearchResponse> response = restTemplate.exchange(
-//            "https://api.openverse.org/v1/audio/?q=lucy",
-//            HttpMethod.GET,
-//            entity,
-//            AudioSearchResponse.class
-//        );
-//        return response.getBody();
-//    }
 
 }
 
