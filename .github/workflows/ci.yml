@@ -25,5 +25,5 @@ jobs:
         with:
           push: true
           tags: idtruoc/femedia:latest
-          context: ./femediasearch
-          file: ./femediasearch/Dockerfile
+          context: "{{defaultContext}}:femediasearch"
+#          file: ./femediasearch/Dockerfile
