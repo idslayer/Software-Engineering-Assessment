@@ -22,7 +22,7 @@ function App() {
                 style={{backgroundImage: "url('https://source.unsplash.com/random/1920x1080?technology')"}}
             >
                 <div className="text-center space-y-6 bg-white bg-opacity-80 p-8 rounded-lg shadow-lg">
-                    <h1 className="text-4xl font-extrabold text-gray-800">Welcome to Media Search</h1>
+                    <h1 className="text-4xl font-extrabold text-gray-800">Welcome to Media Search EDITED</h1>
                     <audio controls className="mt-4">
                         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"/>
                         Your browser does not support the audio element.
