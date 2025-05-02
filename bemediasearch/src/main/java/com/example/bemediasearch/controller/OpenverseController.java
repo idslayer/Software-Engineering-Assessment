@@ -10,7 +10,6 @@ import com.example.bemediasearch.payload.resquest.ImageSearchRequest;
 import com.example.bemediasearch.service.OpenverseService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Nullable;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +32,7 @@ public class OpenverseController {
     }
 
     @GetMapping("/audios")
-    public ResponseEntity<AudioSearchResponse> audioSearch(@Nullable @Parameter String q, @Nullable @Parameter Integer page, @Nullable @Parameter Integer pageSize) {
+    public ResponseEntity<AudioSearchResponse> audioSearch(@Parameter String q, @Parameter Integer page, @Parameter Integer pageSize) {
         AudioSearchRequest request = new AudioSearchRequest(q,page,pageSize);
         AudioSearchResponse response = openverseService.searchAudio(request);
         return ResponseEntity.ok(response);

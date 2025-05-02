@@ -1,7 +1,9 @@
 package com.example.bemediasearch.payload.resquest;
 
-import jakarta.validation.constraints.NotBlank;
+
 import lombok.*;
+
+import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor
