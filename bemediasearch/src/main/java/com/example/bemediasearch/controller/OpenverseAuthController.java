@@ -10,7 +10,6 @@ import com.example.bemediasearch.payload.resquest.RegisterRequest;
 import com.example.bemediasearch.payload.resquest.TokenRequest;
 import com.example.bemediasearch.service.OpenverseAuthService;
 import com.example.bemediasearch.utils.JwtUtil;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,14 +26,14 @@ public class OpenverseAuthController {
     @Autowired
     private JwtUtil jwtUtil;
     @PostMapping("/token")
-    public ResponseEntity<TokenResponse> getToken(@Valid @RequestBody TokenRequest request) {
+    public ResponseEntity<TokenResponse> getToken(@RequestBody TokenRequest request) {
         TokenResponse token = openverseAuthService.getToken(request);
         return ResponseEntity.ok(token);
     }
 
     @PostMapping("/register-client")
     public ResponseEntity<ClientRegistrationResponse> registerClient(
-           @Valid @RequestBody ClientRegistrationRequest request
+           @RequestBody ClientRegistrationRequest request
     ) {
         ClientRegistrationResponse response = openverseAuthService.registerClient(request);
         return ResponseEntity.ok(response);
