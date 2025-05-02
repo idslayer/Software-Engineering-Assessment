@@ -1,15 +1,21 @@
 package com.example.bemediasearch.service;
 
 
+import com.example.bemediasearch.entity.User;
 import com.example.bemediasearch.payload.response.ClientRegistrationResponse;
 import com.example.bemediasearch.payload.response.TokenResponse;
 import com.example.bemediasearch.payload.resquest.ClientRegistrationRequest;
 import com.example.bemediasearch.payload.resquest.TokenRequest;
 import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class OpenverseAuthService {
@@ -58,6 +64,25 @@ public class OpenverseAuthService {
         );
 
         return response.getBody();
+    }
+
+    private final Map<String, User> users = new ConcurrentHashMap<>();
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    public boolean register(String username, String fullName, String password) {
+        if (users.containsKey(username)) return false;
+
+        String passwordHash = passwordEncoder.encode(password);
+        users.put(username, new User(username, fullName, passwordHash));
+        return true;
+    }
+
+    public User authenticate(String username, String password) {
+        User user = users.get(username);
+        if (user != null && passwordEncoder.matches(password, user.getPasswordHash())) {
+            return user;
+        }
+        return null;
     }
 
 
