@@ -1,5 +1,5 @@
 # Use OpenJDK 17 base image
-FROM cimg/openjdk:17.0.6
+FROM adoptopenjdk/openjdk11:jdk-11.0.14.1_1-alpine-slim
 
 # Set working directory
 WORKDIR /app
