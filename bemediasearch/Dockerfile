@@ -8,5 +8,6 @@ WORKDIR /app
 COPY . .
 
 RUN chmod +x mvnw && sed -i "s/\r$//" mvnw
+RUN ./mvnw test
 RUN ./mvnw --version && ./mvnw package
 CMD ["java", "-jar", "target/bemediasearch-0.0.1-SNAPSHOT.jar"]
