@@ -35,10 +35,18 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Build and deploy Container App
+      - name: Build and deploy Container App FE
         uses: azure/container-apps-deploy-action@v1
         with:
 #          acrName: myregistry
           containerAppName: femedia
           resourceGroup: media
           imageToDeploy: docker.io/idtruoc/femedia:latest
+
+      - name: Build and deploy Container App BE
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          #          acrName: myregistry
+          containerAppName: bemedia
+          resourceGroup: media
+          imageToDeploy: docker.io/idtruoc/bemedia:latest
