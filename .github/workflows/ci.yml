@@ -23,17 +23,17 @@ jobs:
 
       - name: Install dependencies and run tests
         working-directory: bemediasearch
-        run: mvn test
+        run: .mvnw/ test
 
       -
-        name: Build and push be
+        name: Build and push BE
         uses: docker/build-push-action@v6
         with:
           push: true
           tags: idtruoc/bemedia:latest
           context: "{{defaultContext}}:bemediasearch"
 
-      - name: Build and push fe
+      - name: Build and push FE
         uses: docker/build-push-action@v6
         with:
           push: true
