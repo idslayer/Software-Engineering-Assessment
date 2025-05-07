@@ -16,7 +16,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       -
-        name: Build and push BE
+        name: Build, test and push BE
         uses: docker/build-push-action@v6
         with:
           push: true
