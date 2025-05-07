@@ -1,4 +1,4 @@
-# Use OpenJDK 17 base image
+# Use OpenJDK 11 base image
 FROM adoptopenjdk/openjdk11:jdk-11.0.14.1_1-alpine-slim
 
 # Set working directory
@@ -9,4 +9,4 @@ COPY . .
 
 RUN chmod +x mvnw && sed -i "s/\r$//" mvnw
 RUN ./mvnw --version && ./mvnw package
-CMD ["java", "-jar", "target/bemedia.jar"]
+CMD ["java", "-jar", "bemediasearch-0.0.1-SNAPSHOT.jar"]
