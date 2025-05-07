@@ -22,7 +22,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Install dependencies and run tests
-        working-directory: bemediasearch
+        working-directory: ./path/to/bemediasearch
         run:  chmod +x mvnw && sed -i "s/\r$//" mvnw && ./mvnw test
 
       -
