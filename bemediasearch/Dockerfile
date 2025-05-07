@@ -9,4 +9,4 @@ COPY . .
 
 RUN chmod +x mvnw && sed -i "s/\r$//" mvnw
 RUN ./mvnw --version && ./mvnw package
-CMD ["java", "-jar", "bemediasearch-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/bemediasearch-0.0.1-SNAPSHOT.jar"]
