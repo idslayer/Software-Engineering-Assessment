@@ -1,53 +1,50 @@
 import React, { useState } from 'react';
-import './SignUp.css';
 import config from './variable';
 
-const SignUp = ({setPage}) => {
+const LogIn = ({setPage}) => {
     const [username, setUsername] = useState('');
-    const [fullname, setFullname] = useState('');
     const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
     const [error, setError] = useState('');
-
+    const setToken = (token) => {
+        localStorage.setItem('token',token)
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setMessage('');
         setError('');
-        if (!username || !fullname || !password) {
-            setError('All fields are required.');
+
+        if (!username || !password) {
+            setError('Both fields are required.');
             return;
         }
 
         try {
-            const response = await fetch(`${config.url}/api/openverse/v1/auth/register`, {
+            const response = await fetch(`${config.url}/api/openverse/v1/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ username, fullName: fullname, password }),
+                body: JSON.stringify({ username, password }),
             });
 
-            const data = await response.text();
-
             if (!response.ok) {
-                setError(data); // Display error message from backend
+                const errorText = await response.text();
+                setError(errorText);
                 return;
             }
-
-            alert(data); // Display success message from backend
-            setUsername('');
-            setFullname('');
-            setPassword('');
-            setPage('login')
+            alert('Login Success !!!')
+            const { token } = await response.json();
+            setToken(token); // Pass the token to the parent component or store it
+            setPage('images')
         } catch (err) {
             setError(err.message || 'An error occurred.');
         }
     };
 
     return (
-        <div className="signup-container">
-            <h1 className="signup-title">Sign Up</h1>
-            <form onSubmit={handleSubmit} className="signup-form">
+        <div className="login-container">
+            <h1>Login</h1>
+            <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
                     <input
@@ -56,17 +53,6 @@ const SignUp = ({setPage}) => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="Enter your username"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="fullname">Full Name</label>
-                    <input
-                        type="text"
-                        id="fullname"
-                        value={fullname}
-                        onChange={(e) => setFullname(e.target.value)}
-                        placeholder="Enter your full name"
                         required
                     />
                 </div>
@@ -81,12 +67,11 @@ const SignUp = ({setPage}) => {
                         required
                     />
                 </div>
-                <button type="submit" className="signup-button">Sign Up</button>
+                <button type="submit">Login</button>
             </form>
-            {message && <p className="success-message">{message}</p>}
             {error && <p className="error-message">{error}</p>}
         </div>
     );
 };
 
-export default SignUp;
+export default LogIn;

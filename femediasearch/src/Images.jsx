@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Images.css';
+import config from './variable';
 
 const LOCAL_STORAGE_KEY = 'recent_searches';
 
@@ -13,9 +14,10 @@ const Images = () => {
     const [recentSearches, setRecentSearches] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const inputRef = useRef(null);
+    const [username,setUsername] = useState('')
 
     useEffect(() => {
-        const storedSearches = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+        const storedSearches = JSON.parse(localStorage.getItem(username + LOCAL_STORAGE_KEY)) || [];
         setRecentSearches(storedSearches);
     }, []);
 
@@ -34,20 +36,20 @@ const Images = () => {
     const updateRecentSearches = (term) => {
         const updated = [term, ...recentSearches.filter((t) => t !== term)].slice(0, 5);
         setRecentSearches(updated);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+        username && localStorage.setItem(username + LOCAL_STORAGE_KEY, JSON.stringify(updated));
     };
 
     const deleteSearchTerm = (term) => {
         const updated = recentSearches.filter((t) => t !== term);
         setRecentSearches(updated);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+        username && localStorage.setItem(username + LOCAL_STORAGE_KEY, JSON.stringify(updated));
     };
 
     const fetchImages = async () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await fetch(`http://localhost:8080/api/openverse/v1/images?q=${encodeURIComponent(query)}&page=${page}`);
+            const res = await fetch(`${config.url}/api/openverse/v1/images?q=${encodeURIComponent(query)}&page=${page}`);
             if (!res.ok) throw new Error('Failed to fetch images');
             const data = await res.json();
             setImages(data.results || []);
@@ -61,10 +63,13 @@ const Images = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        setPage(1);
-        updateRecentSearches(query);
-        fetchImages();
-        setShowDropdown(false);
+        setUsername(localStorage.getItem("username"))
+        if(query){
+            setPage(1);
+            updateRecentSearches(query);
+            fetchImages();
+            setShowDropdown(false);
+        }
     };
 
     const handleRecentClick = (term) => {
@@ -75,14 +80,12 @@ const Images = () => {
     };
 
     const handleClearSearches = () => {
-        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        localStorage.removeItem(username + LOCAL_STORAGE_KEY);
         setRecentSearches([]);
     };
 
     useEffect(() => {
-        if (query) {
             fetchImages();
-        }
     }, [page]);
 
     return (
