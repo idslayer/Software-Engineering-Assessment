@@ -102,7 +102,44 @@ docker run -p 8080:8080 openmedia-be
 - Secure and scalable cloud deployment
 
 ---
+## 🧑‍💻 Alternative Run (Without Docker)
 
+For users who prefer not to use Docker, the frontend and backend can be run directly on your local machine:
+
+### 🔧 Prerequisites
+
+- **Frontend**: Node.js 18+
+- **Backend**: Java 11, Maven (or use included `./mvnw` wrapper)
+
+## 🔗 Useful Links
+
+- [Download Node.js 18 for Windows](https://nodejs.org/dist/v18.18.2/node-v18.18.2-x64.msi)
+- [Download Java 11 (Temurin) for Windows](https://adoptium.net/en-GB/temurin/releases/?version=11)
+
+Ensure both tools are added to your system's PATH after installation for terminal access.
+### 1. Run Backend (Spring Boot)
+
+```bash
+cd bemediasearch 
+./mvnw spring-boot:run
+```
+
+
+This will start the backend at: `http://localhost:8080`
+
+### 2. Run Frontend (React + Vite)
+
+```bash
+cd femediasearch 
+npm install
+npm run dev
+```
+
+This will start the frontend at: `http://localhost:5173`
+
+> 📌 Make sure to update the frontend API base URL to match your local backend (`http://localhost:8080`) in your config file.
+
+---
 ## 🛡️ License
 
 This project is built for educational purposes and uses open-licensed content from the [Openverse API](https://api.openverse.org/v1/).
