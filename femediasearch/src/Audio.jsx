@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './Audio.css';
+import config from './variable';
 
 const LOCAL_STORAGE_KEY = 'recent_audio_searches';
 
@@ -14,9 +15,12 @@ const Audios = () => {
     const [recentSearches, setRecentSearches] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const inputRef = useRef(null);
+    const [username,setUsername] = useState('')
+
 
     useEffect(() => {
-        const storedSearches = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+        let storedSearches = [];
+        if(username) storedSearches = JSON.parse(localStorage.getItem(username + LOCAL_STORAGE_KEY)) || [];
         setRecentSearches(storedSearches);
     }, []);
 
@@ -35,13 +39,13 @@ const Audios = () => {
     const updateRecentSearches = (term) => {
         const updated = [term, ...recentSearches.filter((t) => t !== term)].slice(0, 5);
         setRecentSearches(updated);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+        username && localStorage.setItem(username + LOCAL_STORAGE_KEY, JSON.stringify(updated));
     };
 
     const deleteSearchTerm = (term) => {
         const updated = recentSearches.filter((t) => t !== term);
         setRecentSearches(updated);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
+        username && localStorage.setItem(username + LOCAL_STORAGE_KEY, JSON.stringify(updated));
     };
 
     const fetchAudios = async (q = query, pg = page) => {
@@ -49,7 +53,7 @@ const Audios = () => {
         setError(null);
         try {
             const searchParam = q ? `q=${encodeURIComponent(q)}&` : '';
-            const res = await fetch(`http://localhost:8080/api/openverse/v1/audios?${searchParam}page=${pg}`);
+            const res = await fetch(`${config.url}/api/openverse/v1/audios?${searchParam}page=${pg}`);
             if (!res.ok) throw new Error('Failed to fetch audios');
             const data = await res.json();
             setAudios(data.results || []);
@@ -64,11 +68,14 @@ const Audios = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        setPage(1);
-        setLastSearchedQuery(query);
-        updateRecentSearches(query);
-        fetchAudios(query, 1);
-        setShowDropdown(false);
+        setUsername(localStorage.getItem("username"))
+        if(query) {
+            setPage(1);
+            setLastSearchedQuery(query);
+            updateRecentSearches(query);
+            fetchAudios(query, 1);
+            setShowDropdown(false);
+        };
     };
 
     const handleRecentClick = (term) => {
@@ -80,7 +87,7 @@ const Audios = () => {
     };
 
     const handleClearSearches = () => {
-        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        localStorage.removeItem(username + LOCAL_STORAGE_KEY);
         setRecentSearches([]);
     };
 
@@ -102,7 +109,9 @@ const Audios = () => {
                         className="images-input"
                     />
                     {showDropdown && recentSearches.length > 0 && (
-                        <div className="dropdown">
+                        <div onClick={()=>{
+                            console.log(recentSearches)
+                        }} className="dropdown">
                             {recentSearches.map((term, idx) => (
                                 <div key={idx} className="dropdown-item-wrapper">
                                     <div

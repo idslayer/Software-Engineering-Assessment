@@ -1,8 +1,20 @@
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+.main-page{
+  width: 100vw;
+  max-width: 1920px;
+  max-height: 1080px;
+  height: calc(100vh - 240px);
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+}
+.main-text{
+
 }
 
 .logo {
