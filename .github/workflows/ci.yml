@@ -21,8 +21,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
+      - name: test path
+        working-directory: bemediasearch
+        run: ls -a
+
       - name: Install dependencies and run tests
-        working-directory: ./path/to/bemediasearch
+        working-directory: bemediasearch
         run:  chmod +x mvnw && sed -i "s/\r$//" mvnw && ./mvnw test
 
       -
