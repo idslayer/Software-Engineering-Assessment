@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - main
+#      - main
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies and run tests
         working-directory: bemediasearch
-        run: .mvnw/ test
+        run:  chmod +x mvnw && sed -i "s/\r$//" mvnw && ./mvnw test
 
       -
         name: Build and push BE
